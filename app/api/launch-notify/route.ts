@@ -1,7 +1,10 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
+import { kv } from "@vercel/kv";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+export const dynamic = "force-dynamic";
+
+const getResend = () => new Resend(process.env.RESEND_API_KEY!);
 const ADMIN_SECRET = process.env.LAUNCH_SECRET || "otmenya-launch-2026";
 const SITE = "https://otmenya.holy-water.app";
 
@@ -112,14 +115,17 @@ function getLaunchEmailHtml() {
 
 export async function POST(request: Request) {
   try {
-    const { secret, emails } = await request.json();
+    const { secret } = await request.json();
 
     if (secret !== ADMIN_SECRET) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    if (!emails || !Array.isArray(emails) || emails.length === 0) {
-      return NextResponse.json({ error: "No emails" }, { status: 400 });
+    // Get all subscribers from Redis
+    const emails = await kv.smembers("subscribers:emails") as string[];
+
+    if (!emails || emails.length === 0) {
+      return NextResponse.json({ error: "No subscribers yet" }, { status: 400 });
     }
 
     const batchSize = 50;
@@ -129,7 +135,7 @@ export async function POST(request: Request) {
       const batch = emails.slice(i, i + batchSize);
       await Promise.all(
         batch.map((email: string) =>
-          resend.emails.send({
+          getResend().emails.send({
             from: "ОтменYа <noreply@gmail.holy-water.app>",
             to: email,
             subject: "ОтменYа запустилась! Скачай приложение",

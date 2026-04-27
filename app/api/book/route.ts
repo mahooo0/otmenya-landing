@@ -1,11 +1,12 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
+import { kv } from "@vercel/kv";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+export const dynamic = "force-dynamic";
+
+const getResend = () => new Resend(process.env.RESEND_API_KEY!);
 const ADMIN_EMAIL = "sevinmuhammed06@gmail.com";
 const SITE = "https://otmenya.holy-water.app";
-
-const subscribers: { email: string; lang: string; date: string }[] = [];
 
 type Lang = "ru" | "en" | "uk" | "kk";
 
@@ -122,10 +123,15 @@ export async function POST(request: Request) {
 
     const lang: Lang = (["ru", "en", "uk", "kk"].includes(rawLang) ? rawLang : "ru") as Lang;
     const i = t[lang];
-    subscribers.push({ email, lang, date: new Date().toISOString() });
+
+    // Store in Redis
+    const subscriber = { email, lang, date: new Date().toISOString() };
+    await kv.hset(`subscriber:${email}`, subscriber);
+    await kv.sadd("subscribers:emails", email);
+    const count = await kv.scard("subscribers:emails");
 
     // Confirmation email to user
-    await resend.emails.send({
+    await getResend().emails.send({
       from: "ОтменYа <noreply@gmail.holy-water.app>",
       to: email,
       subject: i.subject,
@@ -183,10 +189,10 @@ export async function POST(request: Request) {
     });
 
     // Notify admin
-    await resend.emails.send({
+    await getResend().emails.send({
       from: "ОтменYа <noreply@gmail.holy-water.app>",
       to: ADMIN_EMAIL,
-      subject: `🔔 Новая заявка #${subscribers.length} (${lang}): ${email}`,
+      subject: `🔔 Новая заявка #${count} (${lang}): ${email}`,
       html: `
 <div style="font-family: -apple-system, sans-serif; padding: 24px; max-width: 400px;">
   <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 20px;">
@@ -200,7 +206,7 @@ export async function POST(request: Request) {
     <tr><td style="padding: 8px 0; color: #888; font-size: 13px;">Email</td><td style="padding: 8px 0; font-weight: 600;">${email}</td></tr>
     <tr><td style="padding: 8px 0; color: #888; font-size: 13px;">Язык</td><td style="padding: 8px 0;">${lang}</td></tr>
     <tr><td style="padding: 8px 0; color: #888; font-size: 13px;">Время</td><td style="padding: 8px 0;">${new Date().toLocaleString("ru-RU", { timeZone: "Asia/Baku" })}</td></tr>
-    <tr><td style="padding: 8px 0; color: #888; font-size: 13px;">Всего заявок</td><td style="padding: 8px 0; font-weight: 700; color: #6B8E63; font-size: 18px;">${subscribers.length}</td></tr>
+    <tr><td style="padding: 8px 0; color: #888; font-size: 13px;">Всего заявок</td><td style="padding: 8px 0; font-weight: 700; color: #6B8E63; font-size: 18px;">${count}</td></tr>
   </table>
 </div>`,
     });
@@ -213,5 +219,7 @@ export async function POST(request: Request) {
 }
 
 export async function GET() {
-  return NextResponse.json({ count: subscribers.length });
+  const count = await kv.scard("subscribers:emails");
+  const emails = await kv.smembers("subscribers:emails");
+  return NextResponse.json({ count, emails });
 }
