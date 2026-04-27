@@ -13,7 +13,7 @@ const LaunchContext = createContext<{
 }>({ mode: "pre-launch", setMode: () => {}, dialogOpen: false, openDialog: () => {}, closeDialog: () => {} });
 
 export function LaunchProvider({ children }: { children: React.ReactNode }) {
-  const [mode, setMode] = useState<LaunchMode>("launched");
+  const [mode, setMode] = useState<LaunchMode>("pre-launch");
   const [dialogOpen, setDialogOpen] = useState(false);
   const openDialog = useCallback(() => setDialogOpen(true), []);
   const closeDialog = useCallback(() => setDialogOpen(false), []);
