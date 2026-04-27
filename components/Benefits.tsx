@@ -4,17 +4,16 @@ import { useRef } from "react";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import IphoneMockup from "./IphoneMockup";
 import { useMockupTheme } from "./MockupThemeContext";
-import { ArchiveScreen } from "./app-screens/ArchiveScreen";
-import { AddSubScreen } from "./app-screens/AddSubScreen";
-import { HomeScreen } from "./app-screens/HomeScreen";
-import { AnalyticsScreen } from "./app-screens/AnalyticsScreen";
+import { InteractiveApp } from "./app-screens/InteractiveApp";
+import { NotificationScreen } from "./app-screens/NotificationScreen";
+import { WidgetHomeScreen } from "./app-screens/WidgetHomeScreen";
 import { motion } from "framer-motion";
 
 const benefits = [
-  { text: "Экономь до 24 000 ₽ в год на забытых подписках.", Screen: ArchiveScreen },
-  { text: "Все подписки СНГ в одном месте.", Screen: AddSubScreen },
-  { text: "Один тап — отмена любого сервиса.", Screen: HomeScreen },
-  { text: "Контроль расходов без банковских данных.", Screen: AnalyticsScreen },
+  { text: "Напоминания за 2 дня до списания — прямо на экране блокировки.", Screen: NotificationScreen, initialScreen: undefined },
+  { text: "Все подписки СНГ в одном месте.", Screen: null, initialScreen: "add" as const },
+  { text: "Один тап — отмена любого сервиса.", Screen: null, initialScreen: "cancel-guide" as const },
+  { text: "Виджеты на домашний экран — триалы всегда на виду.", Screen: WidgetHomeScreen, initialScreen: undefined },
 ];
 
 export default function Benefits() {
@@ -40,7 +39,7 @@ export default function Benefits() {
             className="text-sm text-primary text-balance font-mono font-semibold tracking-wider uppercase"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: false }}
           >
             Преимущества
           </motion.h2>
@@ -48,7 +47,7 @@ export default function Benefits() {
             className="mx-0 mt-4 max-w-lg text-5xl text-balance font-bold sm:max-w-none sm:text-4xl md:text-5xl lg:text-6xl leading-[1.2] tracking-tighter text-foreground lowercase"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: false }}
           >
             Что ты получишь с ОтменYа
           </motion.h3>
@@ -59,17 +58,15 @@ export default function Benefits() {
           ref={scrollRef}
           className="flex overflow-x-auto snap-x snap-mandatory [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
         >
-          {/* Left spacer */}
-          <div className="hidden md:block flex-shrink-0 w-16 lg:w-24 xl:w-32 snap-start" aria-hidden="true" />
+          {/* Left spacer — push first card to center */}
+          <div className="flex-shrink-0 snap-start" style={{ width: "calc(50% - 190px)" }} aria-hidden="true" />
 
           {benefits.map((benefit, i) => {
-            const Screen = benefit.Screen;
             return (
               <div
                 key={i}
                 data-card
-                className="flex-shrink-0 snap-center md:snap-start select-none px-3"
-                style={{ width: 380 }}
+                className="flex-shrink-0 snap-center select-none px-3 w-[85vw] sm:w-[380px]"
               >
                 {/* Phone container — fixed height, overflow hidden at bottom */}
                 <div className="relative" style={{ height: 580, overflow: "hidden", borderRadius: 16 }}>
@@ -83,9 +80,24 @@ export default function Benefits() {
                       (e.currentTarget as HTMLElement).style.transform = "translateY(0px)";
                     }}
                   >
-                    <IphoneMockup scale={0.8}>
-                      <Screen theme={mockupTheme} />
-                    </IphoneMockup>
+                    {/* Desktop */}
+                    <div className="hidden sm:block">
+                      <IphoneMockup scale={0.8}>
+                        {benefit.Screen
+                          ? <benefit.Screen theme={mockupTheme} />
+                          : <InteractiveApp theme={mockupTheme} initialScreen={benefit.initialScreen} />
+                        }
+                      </IphoneMockup>
+                    </div>
+                    {/* Mobile */}
+                    <div className="sm:hidden">
+                      <IphoneMockup scale={0.7}>
+                        {benefit.Screen
+                          ? <benefit.Screen theme={mockupTheme} />
+                          : <InteractiveApp theme={mockupTheme} initialScreen={benefit.initialScreen} />
+                        }
+                      </IphoneMockup>
+                    </div>
                   </div>
                   {/* Bottom fade */}
                   <div
@@ -107,7 +119,7 @@ export default function Benefits() {
           })}
 
           {/* Right spacer */}
-          <div className="hidden md:block flex-shrink-0 w-16 lg:w-24 xl:w-32 snap-start" aria-hidden="true" />
+          <div className="flex-shrink-0 snap-start" style={{ width: "calc(50% - 190px)" }} aria-hidden="true" />
         </div>
 
         {/* Arrows */}

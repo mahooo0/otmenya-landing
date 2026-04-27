@@ -1,25 +1,104 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 import IphoneMockup from "./IphoneMockup";
 import { LogoIcon } from "./Logo";
 import { CTAButton } from "./CTAButtons";
 import { useMockupTheme } from "./MockupThemeContext";
-import { HomeScreen } from "./app-screens/HomeScreen";
-import { SplashScreen } from "./app-screens/SplashScreen";
-import { AnalyticsScreen } from "./app-screens/AnalyticsScreen";
-import { AddSubScreen } from "./app-screens/AddSubScreen";
-import { PaywallScreen } from "./app-screens/PaywallScreen";
+import { InteractiveApp } from "./app-screens/InteractiveApp";
+import { NotificationScreen } from "./app-screens/NotificationScreen";
+import { WidgetHomeScreen } from "./app-screens/WidgetHomeScreen";
 
 function useScreens() {
   const { theme } = useMockupTheme();
   return [
-    { el: <AddSubScreen theme={theme} />, key: "add" },
-    { el: <SplashScreen theme={theme} />, key: "spl" },
-    { el: <HomeScreen theme={theme} />, key: "home" },
-    { el: <AnalyticsScreen theme={theme} />, key: "ana" },
-    { el: <PaywallScreen theme={theme} />, key: "pay" },
+    { el: <InteractiveApp theme={theme} initialScreen="add" />, key: "add" },
+    { el: <NotificationScreen theme={theme} />, key: "notif" },
+    { el: <InteractiveApp theme={theme} initialScreen="home" />, key: "home" },
+    { el: <WidgetHomeScreen theme={theme} />, key: "widget" },
+    { el: <InteractiveApp theme={theme} initialScreen="cancel-guide" />, key: "cancel" },
   ];
+}
+
+function StaggeredPhone({
+  children,
+  offset,
+  delay,
+  scrollProgress,
+  className = "",
+}: {
+  children: React.ReactNode;
+  offset: number;
+  delay: number;
+  scrollProgress: any;
+  className?: string;
+}) {
+  const y = useTransform(scrollProgress, [0, 0.5, 1], [offset, offset * 0.3, 0]);
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 80 + offset }}
+      animate={{ opacity: 1, y: offset }}
+      transition={{
+        duration: 0.8,
+        delay: 1.5 + delay,
+        ease: [0.16, 1, 0.3, 1],
+      }}
+      style={{ y }}
+      className={className}
+    >
+      <IphoneMockup scale={0.6}>
+        {children}
+      </IphoneMockup>
+    </motion.div>
+  );
+}
+
+function HeroPhones({
+  screens,
+  theme,
+}: {
+  screens: { el: React.ReactNode; key: string }[];
+  theme: "light" | "dark";
+}) {
+  const ref = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start end", "end start"],
+  });
+
+  const offsets = [100, 50, 0, 50, 100];
+  const delays = [0.15, 0.08, 0, 0.08, 0.15];
+
+  return (
+    <div ref={ref} className="mt-16">
+      <div className="flex items-start justify-center gap-4 md:gap-6">
+        {screens.map((s, i) => (
+          <StaggeredPhone
+            key={s.key}
+            offset={offsets[i]}
+            delay={delays[i]}
+            scrollProgress={scrollYProgress}
+            className="hidden sm:block first:hidden last:hidden lg:first:block lg:last:block"
+          >
+            {s.el}
+          </StaggeredPhone>
+        ))}
+        {/* Mobile — only center phone */}
+        <motion.div
+          initial={{ opacity: 0, y: 60 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 1.5, ease: [0.16, 1, 0.3, 1] }}
+          className="block sm:hidden"
+        >
+          <IphoneMockup scale={0.7}>
+            <InteractiveApp theme={theme} initialScreen="home" />
+          </IphoneMockup>
+        </motion.div>
+      </div>
+    </div>
+  );
 }
 
 export default function Hero() {
@@ -96,49 +175,8 @@ export default function Hero() {
           <CTAButton size="lg" />
         </motion.div>
 
-        {/* 5 iPhones — rise up last */}
-        <motion.div
-          initial={{ opacity: 0, y: 100 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 1.4, ease: [0.16, 1, 0.3, 1] }}
-          className="mt-16 flex items-start justify-center gap-4 md:gap-6"
-        >
-          {screens.map((s, i) => {
-            const offsets = [40, 15, 0, 15, 40];
-            const delays = [0.15, 0.08, 0, 0.08, 0.15];
-            return (
-              <motion.div
-                key={s.key}
-                initial={{ opacity: 0, y: 60 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{
-                  duration: 0.8,
-                  delay: 1.5 + delays[i],
-                  ease: [0.16, 1, 0.3, 1],
-                }}
-                className="hidden sm:block first:hidden last:hidden lg:first:block lg:last:block"
-                style={{
-                  transform: `translateY(${offsets[i]}px)`,
-                }}
-              >
-                <IphoneMockup scale={0.6}>
-                  {s.el}
-                </IphoneMockup>
-              </motion.div>
-            );
-          })}
-          {/* Show only center phone on mobile */}
-          <motion.div
-            initial={{ opacity: 0, y: 60 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 1.5, ease: [0.16, 1, 0.3, 1] }}
-            className="block sm:hidden"
-          >
-            <IphoneMockup scale={0.7}>
-              <HomeScreen theme={theme} />
-            </IphoneMockup>
-          </motion.div>
-        </motion.div>
+        {/* 5 iPhones — staggered, align on scroll */}
+        <HeroPhones screens={screens} theme={theme} />
       </div>
     </section>
   );

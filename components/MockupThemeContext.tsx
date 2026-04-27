@@ -11,7 +11,7 @@ const MockupThemeContext = createContext<{
 }>({ theme: "dark", toggle: () => {} });
 
 export function MockupThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setTheme] = useState<MockupTheme>("dark");
+  const [theme, setTheme] = useState<MockupTheme>("light");
   const toggle = useCallback(() => setTheme((t) => (t === "dark" ? "light" : "dark")), []);
   return (
     <MockupThemeContext.Provider value={{ theme, toggle }}>

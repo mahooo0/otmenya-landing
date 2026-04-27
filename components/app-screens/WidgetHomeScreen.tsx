@@ -179,16 +179,16 @@ export function WidgetHomeScreen({ theme = "light" }: WidgetHomeScreenProps) {
         {/* Row 2: medium widget */}
         <WidgetMedium t={t} />
 
-        {/* Row 3: app icons row */}
+        {/* Row 3: app icons row — real icons */}
         <div style={{ display: "flex", gap: 14, justifyContent: "center", marginTop: 8 }}>
           {[
-            { bg: "#007AFF", icon: "M", label: "Почта" },
-            { bg: "#34C759", icon: "Т", label: "Телефон" },
-            { bg: "#FF9500", icon: "Н", label: "Настройки" },
-            { bg: "", icon: "logo", label: "ОтменYа" },
+            { src: "/app-icons/spotify.jpg", label: "Spotify" },
+            { src: "/app-icons/netflix.jpg", label: "Netflix" },
+            { src: "/app-icons/chatgpt.jpg", label: "ChatGPT" },
+            { src: "logo", label: "ОтменYа" },
           ].map((app, i) => (
             <div key={i} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 4 }}>
-              {app.icon === "logo" ? (
+              {app.src === "logo" ? (
                 <svg width={60} height={60} viewBox="0 0 120 120" fill="none">
                   <defs><clipPath id="wgLogoClip"><rect width="120" height="120" rx="28" /></clipPath></defs>
                   <g clipPath="url(#wgLogoClip)">
@@ -199,13 +199,16 @@ export function WidgetHomeScreen({ theme = "light" }: WidgetHomeScreenProps) {
                   </g>
                 </svg>
               ) : (
-                <div style={{
-                  width: 60, height: 60, borderRadius: 14,
-                  background: app.bg, color: "#fff",
-                  display: "flex", alignItems: "center", justifyContent: "center",
-                  fontSize: 22, fontWeight: 600,
-                  boxShadow: "0 2px 8px rgba(0,0,0,0.12)",
-                }}>{app.icon}</div>
+                /* eslint-disable-next-line @next/next/no-img-element */
+                <img
+                  src={app.src}
+                  alt={app.label}
+                  style={{
+                    width: 60, height: 60, borderRadius: 14,
+                    objectFit: "cover",
+                    boxShadow: "0 2px 8px rgba(0,0,0,0.12)",
+                  }}
+                />
               )}
               <div style={{ fontSize: 10, color: isDark ? "rgba(255,255,255,0.6)" : "rgba(0,0,0,0.6)" }}>
                 {app.label}

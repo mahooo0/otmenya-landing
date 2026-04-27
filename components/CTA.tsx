@@ -1,10 +1,10 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { HeartHandshake } from "lucide-react";
 import Marquee from "./Marquee";
 import { CTAButton } from "./CTAButtons";
 import { useLaunchMode } from "./LaunchState";
+import { LogoIcon } from "./Logo";
 
 const testimonialTexts = [
   "Забыл отменить Яндекс Плюс — списали 299 рублей. С ОтменYа такого не будет.",
@@ -64,21 +64,21 @@ export default function CTA() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={{ once: false }}
           transition={{ duration: 0.5 }}
         >
-          <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-primary">
-            <HeartHandshake className="h-8 w-8 text-primary-foreground" />
+          <div className="mx-auto mb-6 w-fit">
+            <LogoIcon size={72} />
           </div>
           <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
             {mode === "pre-launch"
               ? "Готов взять подписки под контроль?"
-              : "Скачай и начни экономить"}
+              : "Забудь про «упс, списали»"}
           </h2>
           <p className="mx-auto mt-4 max-w-md text-muted-foreground">
             {mode === "pre-launch"
               ? "Запускаемся скоро. Забронируй ранний доступ — первые 100 пользователей получат Pro бесплатно."
-              : "Доступно для iOS и Android. Бесплатно до 5 подписок."}
+              : "Один тап — и подписка отменена. 50+ сервисов СНГ. Бесплатно."}
           </p>
           <div className="mt-8 flex justify-center">
             <CTAButton size="lg" />

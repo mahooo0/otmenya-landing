@@ -28,7 +28,7 @@ export default function Section({
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
+            viewport={{ once: false, margin: "-100px" }}
             transition={{ duration: 0.5 }}
             className={`mb-12 md:mb-16 ${
               align === "center" ? "text-center" : "text-left"

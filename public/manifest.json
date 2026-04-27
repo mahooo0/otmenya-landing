@@ -1,0 +1,17 @@
+{
+  "name": "ОтменYа — Трекер подписок и триалов",
+  "short_name": "ОтменYа",
+  "description": "Все подписки СНГ в одном приложении. Готовый скрипт отмены к каждому сервису.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#000000",
+  "lang": "ru",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "any",
+      "type": "image/x-icon"
+    }
+  ]
+}

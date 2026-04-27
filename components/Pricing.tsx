@@ -46,7 +46,7 @@ export default function Pricing() {
             key={i}
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: false }}
             transition={{ duration: 0.5, delay: i * 0.1 }}
             className={`relative overflow-hidden rounded-3xl border p-8 ${
               plan.featured

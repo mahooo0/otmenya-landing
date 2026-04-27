@@ -43,7 +43,7 @@ export default function FAQ() {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
+        viewport={{ once: false }}
         transition={{ duration: 0.5 }}
         className="mx-auto max-w-3xl"
       >

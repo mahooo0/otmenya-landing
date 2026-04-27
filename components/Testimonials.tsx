@@ -84,7 +84,7 @@ export default function Testimonials() {
       <motion.div
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
+        viewport={{ once: false }}
         transition={{ duration: 0.6 }}
         className="columns-1 gap-4 sm:columns-2 lg:columns-3 xl:columns-4"
       >
@@ -93,7 +93,7 @@ export default function Testimonials() {
             key={i}
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: false }}
             transition={{ duration: 0.4, delay: i * 0.05 }}
             className="mb-4 break-inside-avoid rounded-3xl bg-muted/60 p-5"
           >

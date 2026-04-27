@@ -139,9 +139,9 @@ export function NotificationScreen({ theme = "light" }: NotificationScreenProps)
       style={{
         width: "100%",
         height: "100%",
-        background: isDark
-          ? "linear-gradient(180deg, #0a0a1a 0%, #1a1a2e 50%, #0d0d1a 100%)"
-          : "linear-gradient(180deg, #667eea 0%, #764ba2 50%, #f093fb 100%)",
+        backgroundImage: "url(https://devicescss.xyz/assets/img/bg-iphone-14-pro.jpg)",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
         display: "flex",
         flexDirection: "column",
         fontFamily: "-apple-system, BlinkMacSystemFont, sans-serif",
@@ -178,11 +178,12 @@ export function NotificationScreen({ theme = "light" }: NotificationScreenProps)
         </div>
       </div>
 
-      {/* Lock icon */}
+      {/* Lock icon — closed */}
       <div style={{ textAlign: "center", marginTop: 20 }}>
-        <svg width="16" height="20" viewBox="0 0 16 20" fill="none" style={{ opacity: 0.6 }}>
-          <rect x="1" y="8" width="14" height="11" rx="3" stroke="#fff" strokeWidth="1.5" />
-          <path d="M4.5 8V5.5a3.5 3.5 0 0 1 7 0V8" stroke="#fff" strokeWidth="1.5" strokeLinecap="round" />
+        <svg width="14" height="18" viewBox="0 0 24 28" fill="none" style={{ opacity: 0.7 }}>
+          <rect x="2" y="12" width="20" height="14" rx="4" fill="#fff" fillOpacity="0.25" />
+          <rect x="2" y="12" width="20" height="14" rx="4" stroke="#fff" strokeWidth="1.5" />
+          <path d="M7 12V8a5 5 0 0 1 10 0v4" stroke="#fff" strokeWidth="2" strokeLinecap="round" />
         </svg>
       </div>
 

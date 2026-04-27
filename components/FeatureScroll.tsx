@@ -5,9 +5,9 @@ import { useRef } from "react";
 import IphoneMockup from "./IphoneMockup";
 import { useMockupTheme } from "./MockupThemeContext";
 import Section from "./Section";
-import { HomeScreen } from "./app-screens/HomeScreen";
-import { AnalyticsScreen } from "./app-screens/AnalyticsScreen";
-import { ArchiveScreen } from "./app-screens/ArchiveScreen";
+import { InteractiveApp } from "./app-screens/InteractiveApp";
+import { NotificationScreen } from "./app-screens/NotificationScreen";
+import { WidgetHomeScreen } from "./app-screens/WidgetHomeScreen";
 
 export default function FeatureScroll() {
   const { theme } = useMockupTheme();
@@ -30,17 +30,17 @@ export default function FeatureScroll() {
       <div ref={containerRef} className="flex items-start justify-center gap-4 md:gap-8">
         <motion.div style={{ y: y1 }} className="hidden md:block">
           <IphoneMockup scale={0.7}>
-            <HomeScreen theme={theme} />
+            <InteractiveApp theme={theme} initialScreen="home" />
           </IphoneMockup>
         </motion.div>
         <motion.div style={{ y: y2 }}>
           <IphoneMockup scale={0.7}>
-            <AnalyticsScreen theme={theme} />
+            <NotificationScreen theme={theme} />
           </IphoneMockup>
         </motion.div>
         <motion.div style={{ y: y3 }} className="hidden md:block">
           <IphoneMockup scale={0.7}>
-            <ArchiveScreen theme={theme} />
+            <WidgetHomeScreen theme={theme} />
           </IphoneMockup>
         </motion.div>
       </div>

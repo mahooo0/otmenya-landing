@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
 import { Drawer } from "vaul";
 import { LogoIcon } from "./Logo";
-import { useLaunchMode } from "./LaunchState";
+import { CTAButton } from "./CTAButtons";
 
 const navLinks = [
   { label: "Возможности", href: "#features" },
@@ -14,7 +14,6 @@ const navLinks = [
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
-  const { openDialog } = useLaunchMode();
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
@@ -57,12 +56,6 @@ export default function Header() {
               {link.label}
             </a>
           ))}
-          <button
-            onClick={openDialog}
-            className="inline-flex h-9 items-center justify-center rounded-full bg-primary px-5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
-          >
-            Получить доступ
-          </button>
         </nav>
 
         {/* Mobile hamburger */}
@@ -95,14 +88,6 @@ export default function Header() {
                       </a>
                     </Drawer.Close>
                   ))}
-                  <Drawer.Close asChild>
-                    <button
-                      onClick={openDialog}
-                      className="mt-4 inline-flex h-12 items-center justify-center rounded-full bg-primary px-6 text-base font-medium text-primary-foreground"
-                    >
-                      Получить доступ
-                    </button>
-                  </Drawer.Close>
                 </nav>
               </Drawer.Content>
             </Drawer.Portal>

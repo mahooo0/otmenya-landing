@@ -4,15 +4,13 @@ import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import IphoneMockup from "./IphoneMockup";
 import { useMockupTheme } from "./MockupThemeContext";
-import { HomeScreen } from "./app-screens/HomeScreen";
-import { AnalyticsScreen } from "./app-screens/AnalyticsScreen";
-import { AddSubScreen } from "./app-screens/AddSubScreen";
+import { InteractiveApp } from "./app-screens/InteractiveApp";
 import { WidgetHomeScreen } from "./app-screens/WidgetHomeScreen";
 import { NotificationScreen } from "./app-screens/NotificationScreen";
 
 function AnimateIn({ children, className = "" }: { children: React.ReactNode; className?: string }) {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-50px" });
+  const isInView = useInView(ref, { once: false, margin: "-50px" });
   return (
     <div
       ref={ref}
@@ -38,7 +36,7 @@ export default function BentoGrid() {
             className="text-sm text-primary text-balance font-mono font-semibold tracking-wider uppercase"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: false }}
           >
             Преимущества
           </motion.h2>
@@ -46,7 +44,7 @@ export default function BentoGrid() {
             className="mx-0 mt-4 max-w-lg text-5xl text-balance font-bold sm:max-w-none sm:text-4xl md:text-5xl lg:text-6xl leading-[1.2] tracking-tighter text-foreground lowercase"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: false }}
           >
             Всё что нужно и ничего лишнего
           </motion.h3>
@@ -63,8 +61,11 @@ export default function BentoGrid() {
               Ты узнаешь о списании раньше, чем банк.
             </p>
             {/* Big phone showing lock screen with notifications */}
-            <div className="flex justify-center overflow-hidden" style={{ height: 560 }}>
-              <IphoneMockup scale={1}>
+            <div className="flex justify-center overflow-hidden h-[350px] sm:h-[560px]">
+              <IphoneMockup scale={0.6} className="sm:hidden">
+                <NotificationScreen theme={theme} />
+              </IphoneMockup>
+              <IphoneMockup scale={1} className="hidden sm:block">
                 <NotificationScreen theme={theme} />
               </IphoneMockup>
             </div>
@@ -80,7 +81,7 @@ export default function BentoGrid() {
             </p>
             <div className="flex justify-center overflow-hidden" style={{ height: 380 }}>
               <IphoneMockup scale={0.65}>
-                <AddSubScreen theme={theme} />
+                <InteractiveApp theme={theme} initialScreen="add" />
               </IphoneMockup>
             </div>
           </AnimateIn>
@@ -95,7 +96,7 @@ export default function BentoGrid() {
             </p>
             <div className="flex justify-center overflow-hidden" style={{ height: 380 }}>
               <IphoneMockup scale={0.65}>
-                <AnalyticsScreen theme={theme} />
+                <InteractiveApp theme={theme} initialScreen="analytics" />
               </IphoneMockup>
             </div>
           </AnimateIn>
@@ -109,8 +110,11 @@ export default function BentoGrid() {
               Триал и ближайшие списания всегда на виду — прямо на экране блокировки.
               Без лишних открытий приложения.
             </p>
-            <div className="flex justify-center overflow-hidden" style={{ height: 560 }}>
-              <IphoneMockup scale={1}>
+            <div className="flex justify-center overflow-hidden h-[350px] sm:h-[560px]">
+              <IphoneMockup scale={0.6} className="sm:hidden">
+                <WidgetHomeScreen theme={theme} />
+              </IphoneMockup>
+              <IphoneMockup scale={1} className="hidden sm:block">
                 <WidgetHomeScreen theme={theme} />
               </IphoneMockup>
             </div>

@@ -31,7 +31,7 @@ export default function IphoneMockup({
             <div className="absolute right-0 bottom-[85px] z-20 h-[7px] w-5 bg-black/25" />
             <div className="absolute top-0 right-[85px] z-20 h-5 w-[7px] bg-black/25" />
             <div className="absolute bottom-0 left-[85px] z-20 h-5 w-[7px] bg-black/25" />
-            <div className="relative z-20 h-full w-full rounded-[49px] overflow-hidden bg-neutral-100 dark:bg-neutral-900">
+            <div className="relative z-20 h-full w-full rounded-[49px] overflow-hidden bg-neutral-100 dark:bg-neutral-900" data-mockup-content>
               {children}
             </div>
           </div>

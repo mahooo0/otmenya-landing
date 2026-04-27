@@ -42,3 +42,11 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+/* Disable scroll inside mockups on mobile so it doesn't interfere with page scroll */
+@media (max-width: 640px) {
+  [data-mockup-content] * {
+    overflow: hidden !important;
+    -webkit-overflow-scrolling: auto !important;
+  }
+}

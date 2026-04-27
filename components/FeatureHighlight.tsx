@@ -3,30 +3,28 @@
 import { motion } from "framer-motion";
 import IphoneMockup from "./IphoneMockup";
 import { useMockupTheme } from "./MockupThemeContext";
-import { HomeScreen } from "./app-screens/HomeScreen";
-import { AddSubScreen } from "./app-screens/AddSubScreen";
-import { PaywallScreen } from "./app-screens/PaywallScreen";
+import { InteractiveApp } from "./app-screens/InteractiveApp";
 
 const features = [
   {
     title: "Триалы на первом экране",
     description:
       "Главный экран показывает триалы с обратным отсчётом. Кнопка «Отменить» прямо на карточке.",
-    ScreenComp: HomeScreen,
+    initialScreen: "home" as const,
     reverse: false,
   },
   {
     title: "Каталог СНГ-сервисов",
     description:
       'Больше 50 сервисов из коробки: Яндекс Плюс, Кинопоиск, Okko, Spotify, ChatGPT и другие.',
-    ScreenComp: AddSubScreen,
+    initialScreen: "add" as const,
     reverse: true,
   },
   {
     title: "Готовый скрипт отмены",
     description:
       "Deep-link в экран отмены сервиса. Плюс пошаговая инструкция. Один тап — и ты на месте.",
-    ScreenComp: PaywallScreen,
+    initialScreen: "cancel-guide" as const,
     reverse: false,
   },
 ];
@@ -42,7 +40,7 @@ export default function FeatureHighlight() {
               key={i}
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
+              viewport={{ once: false, margin: "-100px" }}
               transition={{ duration: 0.6 }}
               className={`flex flex-col items-center gap-8 md:gap-16 ${
                 feature.reverse ? "md:flex-row-reverse" : "md:flex-row"
@@ -51,7 +49,7 @@ export default function FeatureHighlight() {
               {/* Phone */}
               <div className="flex-shrink-0">
                 <IphoneMockup scale={0.7}>
-                  <feature.ScreenComp theme={theme} />
+                  <InteractiveApp theme={theme} initialScreen={feature.initialScreen} />
                 </IphoneMockup>
               </div>
 
@@ -59,7 +57,7 @@ export default function FeatureHighlight() {
               <motion.div
                 initial={{ opacity: 0, x: feature.reverse ? -30 : 30 }}
                 whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true, margin: "-100px" }}
+                viewport={{ once: false, margin: "-100px" }}
                 transition={{ duration: 0.6, delay: 0.2 }}
                 className="flex max-w-md flex-col"
               >
