@@ -28,7 +28,7 @@ export async function POST(request: Request) {
       await Promise.all(
         batch.map((email: string) =>
           resend.emails.send({
-            from: "ОтменYа <noreply@holy-water.app>",
+            from: "ОтменYа <onboarding@resend.dev>",
             to: email,
             subject: "ОтменYа запустилась! 🚀 Скачай приложение",
             html: `
