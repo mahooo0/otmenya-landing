@@ -133,7 +133,7 @@ export async function POST(request: Request) {
       await Promise.all(
         batch.map((email: string) =>
           getResend().emails.send({
-            from: "ОтменYа <noreply@gmail.holy-water.app>",
+            from: "ОтменYа <noreply@mail.holy-water.app>",
             to: email,
             subject: "ОтменYа запустилась! Скачай приложение",
             html: getLaunchEmailHtml(),

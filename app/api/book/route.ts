@@ -129,7 +129,7 @@ export async function POST(request: Request) {
 
     // Confirmation email to user
     await getResend().emails.send({
-      from: "ОтменYа <noreply@gmail.holy-water.app>",
+      from: "ОтменYа <noreply@mail.holy-water.app>",
       to: email,
       subject: i.subject,
       html: `
@@ -187,7 +187,7 @@ export async function POST(request: Request) {
 
     // Notify admin
     await getResend().emails.send({
-      from: "ОтменYа <noreply@gmail.holy-water.app>",
+      from: "ОтменYа <noreply@mail.holy-water.app>",
       to: ADMIN_EMAIL,
       subject: `🔔 Новая заявка #${count} (${lang}): ${email}`,
       html: `
