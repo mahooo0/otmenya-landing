@@ -4,16 +4,17 @@ import { useRef } from "react";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import IphoneMockup from "./IphoneMockup";
 import { useMockupTheme } from "./MockupThemeContext";
-import { InteractiveApp } from "./app-screens/InteractiveApp";
+import { AddSubScreen } from "./app-screens/AddSubScreen";
+import { CancelGuideScreen } from "./app-screens/CancelGuideScreen";
 import { NotificationScreen } from "./app-screens/NotificationScreen";
 import { WidgetHomeScreen } from "./app-screens/WidgetHomeScreen";
 import { motion } from "framer-motion";
 
 const benefits = [
-  { text: "Напоминания за 2 дня до списания — прямо на экране блокировки.", Screen: NotificationScreen, initialScreen: undefined },
-  { text: "Все подписки СНГ в одном месте.", Screen: null, initialScreen: "add" as const },
-  { text: "Один тап — отмена любого сервиса.", Screen: null, initialScreen: "cancel-guide" as const },
-  { text: "Виджеты на домашний экран — триалы всегда на виду.", Screen: WidgetHomeScreen, initialScreen: undefined },
+  { text: "Напоминания за 2 дня до списания — прямо на экране блокировки.", Screen: NotificationScreen },
+  { text: "Все подписки СНГ в одном месте.", Screen: AddSubScreen },
+  { text: "Один тап — отмена любого сервиса.", Screen: CancelGuideScreen },
+  { text: "Виджеты на домашний экран — триалы всегда на виду.", Screen: WidgetHomeScreen },
 ];
 
 export default function Benefits() {
@@ -83,19 +84,13 @@ export default function Benefits() {
                     {/* Desktop */}
                     <div className="hidden sm:block">
                       <IphoneMockup scale={0.8}>
-                        {benefit.Screen
-                          ? <benefit.Screen theme={mockupTheme} />
-                          : <InteractiveApp theme={mockupTheme} initialScreen={benefit.initialScreen} />
-                        }
+                        <benefit.Screen theme={mockupTheme} />
                       </IphoneMockup>
                     </div>
                     {/* Mobile */}
                     <div className="sm:hidden">
                       <IphoneMockup scale={0.7}>
-                        {benefit.Screen
-                          ? <benefit.Screen theme={mockupTheme} />
-                          : <InteractiveApp theme={mockupTheme} initialScreen={benefit.initialScreen} />
-                        }
+                        <benefit.Screen theme={mockupTheme} />
                       </IphoneMockup>
                     </div>
                   </div>

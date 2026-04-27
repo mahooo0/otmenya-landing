@@ -2,31 +2,39 @@
 
 import IphoneMockup from "./IphoneMockup";
 import { useMockupTheme } from "./MockupThemeContext";
-import { InteractiveApp } from "./app-screens/InteractiveApp";
+import { HomeScreen } from "./app-screens/HomeScreen";
+import { AddSubScreen } from "./app-screens/AddSubScreen";
+import { CancelGuideScreen } from "./app-screens/CancelGuideScreen";
 
 const features = [
   {
     title: "Триалы на первом экране",
     description:
       "Главный экран показывает триалы с обратным отсчётом. Кнопка «Отменить» прямо на карточке.",
-    initialScreen: "home" as const,
+    screen: "home",
     reverse: false,
   },
   {
     title: "Каталог СНГ-сервисов",
     description:
       "Больше 50 сервисов из коробки: Яндекс Плюс, Кинопоиск, Okko, Spotify, ChatGPT и другие.",
-    initialScreen: "add" as const,
+    screen: "add",
     reverse: true,
   },
   {
     title: "Готовый скрипт отмены",
     description:
       "Deep-link в экран отмены сервиса. Плюс пошаговая инструкция. Один тап — и ты на месте.",
-    initialScreen: "cancel-guide" as const,
+    screen: "cancel",
     reverse: false,
   },
 ];
+
+function ScreenComponent({ screen, theme }: { screen: string; theme: "light" | "dark" }) {
+  if (screen === "home") return <HomeScreen theme={theme} />;
+  if (screen === "add") return <AddSubScreen theme={theme} />;
+  return <CancelGuideScreen theme={theme} />;
+}
 
 export default function FeatureHighlight() {
   const { theme } = useMockupTheme();
@@ -41,21 +49,18 @@ export default function FeatureHighlight() {
                 feature.reverse ? "md:flex-row-reverse" : "md:flex-row"
               }`}
             >
-              {/* Phone */}
               <div className="flex-shrink-0">
                 <div className="hidden md:block">
                   <IphoneMockup scale={0.7}>
-                    <InteractiveApp theme={theme} initialScreen={feature.initialScreen} />
+                    <ScreenComponent screen={feature.screen} theme={theme} />
                   </IphoneMockup>
                 </div>
                 <div className="md:hidden">
                   <IphoneMockup scale={0.55}>
-                    <InteractiveApp theme={theme} initialScreen={feature.initialScreen} />
+                    <ScreenComponent screen={feature.screen} theme={theme} />
                   </IphoneMockup>
                 </div>
               </div>
-
-              {/* Text */}
               <div className="flex max-w-md flex-col text-center md:text-left">
                 <h3 className="text-xl font-bold tracking-tighter sm:text-2xl md:text-4xl">
                   {feature.title}

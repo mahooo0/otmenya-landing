@@ -4,7 +4,8 @@ import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import IphoneMockup from "./IphoneMockup";
 import { useMockupTheme } from "./MockupThemeContext";
-import { InteractiveApp } from "./app-screens/InteractiveApp";
+import { AddSubScreen } from "./app-screens/AddSubScreen";
+import { AnalyticsScreen } from "./app-screens/AnalyticsScreen";
 import { WidgetHomeScreen } from "./app-screens/WidgetHomeScreen";
 import { NotificationScreen } from "./app-screens/NotificationScreen";
 
@@ -81,7 +82,7 @@ export default function BentoGrid() {
             </p>
             <div className="flex justify-center overflow-hidden" style={{ height: 380 }}>
               <IphoneMockup scale={0.65}>
-                <InteractiveApp theme={theme} initialScreen="add" />
+                <AddSubScreen theme={theme} />
               </IphoneMockup>
             </div>
           </AnimateIn>
@@ -96,7 +97,7 @@ export default function BentoGrid() {
             </p>
             <div className="flex justify-center overflow-hidden" style={{ height: 380 }}>
               <IphoneMockup scale={0.65}>
-                <InteractiveApp theme={theme} initialScreen="analytics" />
+                <AnalyticsScreen theme={theme} />
               </IphoneMockup>
             </div>
           </AnimateIn>

@@ -6,18 +6,21 @@ import IphoneMockup from "./IphoneMockup";
 import { LogoIcon } from "./Logo";
 import { CTAButton } from "./CTAButtons";
 import { useMockupTheme } from "./MockupThemeContext";
-import { InteractiveApp } from "./app-screens/InteractiveApp";
+import { HomeScreen } from "./app-screens/HomeScreen";
+import { AddSubScreen } from "./app-screens/AddSubScreen";
+import { AnalyticsScreen } from "./app-screens/AnalyticsScreen";
+import { CancelGuideScreen } from "./app-screens/CancelGuideScreen";
 import { NotificationScreen } from "./app-screens/NotificationScreen";
 import { WidgetHomeScreen } from "./app-screens/WidgetHomeScreen";
 
 function useScreens() {
   const { theme } = useMockupTheme();
   return [
-    { el: <InteractiveApp theme={theme} initialScreen="add" />, key: "add" },
+    { el: <AddSubScreen theme={theme} />, key: "add" },
     { el: <NotificationScreen theme={theme} />, key: "notif" },
-    { el: <InteractiveApp theme={theme} initialScreen="home" />, key: "home" },
+    { el: <HomeScreen theme={theme} />, key: "home" },
     { el: <WidgetHomeScreen theme={theme} />, key: "widget" },
-    { el: <InteractiveApp theme={theme} initialScreen="cancel-guide" />, key: "cancel" },
+    { el: <CancelGuideScreen theme={theme} />, key: "cancel" },
   ];
 }
 
@@ -93,7 +96,7 @@ function HeroPhones({
           className="block sm:hidden"
         >
           <IphoneMockup scale={0.7}>
-            <InteractiveApp theme={theme} initialScreen="home" />
+            <HomeScreen theme={theme} />
           </IphoneMockup>
         </motion.div>
       </div>
