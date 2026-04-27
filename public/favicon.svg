@@ -1,0 +1,9 @@
+<svg width="32" height="32" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <clipPath id="fc"><rect width="120" height="120" rx="28"/></clipPath>
+  <g clip-path="url(#fc)">
+    <rect width="120" height="120" fill="#111"/>
+    <rect y="58" width="120" height="62" fill="#6B8E63"/>
+    <text x="60" y="48" text-anchor="middle" font-family="Inter,sans-serif" font-weight="600" font-size="20" fill="#fff" letter-spacing="0.5">отмен</text>
+    <text x="60" y="92" text-anchor="middle" font-family="Inter,sans-serif" font-weight="800" font-size="36" fill="#fff" letter-spacing="-1">Yа</text>
+  </g>
+</svg>
