@@ -13,11 +13,27 @@ interface BookingDialogProps {
 export default function BookingDialog({ open, onClose }: BookingDialogProps) {
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email) return;
-    setSubmitted(true);
+    setLoading(true);
+    setError("");
+    try {
+      const res = await fetch("/api/book", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+      if (!res.ok) throw new Error("Failed");
+      setSubmitted(true);
+    } catch {
+      setError("Не удалось отправить. Попробуй ещё раз.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleClose = () => {
@@ -105,12 +121,13 @@ export default function BookingDialog({ open, onClose }: BookingDialogProps) {
                         className="w-full h-12 rounded-xl border border-border bg-white/60 px-4 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary/30 transition-all"
                       />
                     </div>
+                    {error && <p className="text-red-500 text-xs text-center">{error}</p>}
                     <button
                       type="submit"
-                      className="w-full h-12 rounded-xl bg-primary text-primary-foreground font-medium text-sm flex items-center justify-center gap-2 hover:bg-primary/90 transition-colors"
+                      disabled={loading}
+                      className="w-full h-12 rounded-xl bg-primary text-primary-foreground font-medium text-sm flex items-center justify-center gap-2 hover:bg-primary/90 transition-colors disabled:opacity-50"
                     >
-                      <Send size={16} />
-                      Забронировать
+                      {loading ? "Отправляем..." : <><Send size={16} /> Забронировать</>}
                     </button>
                   </form>
 
