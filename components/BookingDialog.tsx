@@ -25,7 +25,7 @@ export default function BookingDialog({ open, onClose }: BookingDialogProps) {
       const res = await fetch("/api/book", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify({ email, lang: document.documentElement.lang || "ru" }),
       });
       if (!res.ok) throw new Error("Failed");
       setSubmitted(true);
