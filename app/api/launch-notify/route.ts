@@ -11,11 +11,8 @@ const SITE = "https://otmenya.holy-water.app";
 const logoHtml = `
 <table cellpadding="0" cellspacing="0" border="0" style="margin: 0 auto 24px;">
   <tr>
-    <td style="width: 80px; height: 80px; border-radius: 20px; overflow: hidden;">
-      <table cellpadding="0" cellspacing="0" border="0" width="80">
-        <tr><td style="background: #111; height: 40px; font-size: 0; line-height: 0;">&nbsp;</td></tr>
-        <tr><td style="background: #6B8E63; height: 40px; font-size: 0; line-height: 0;">&nbsp;</td></tr>
-      </table>
+    <td style="font-family: -apple-system, sans-serif; text-align: center;">
+      <span style="font-size: 32px; font-weight: 800; color: #111; letter-spacing: -1px;">Отмен</span><span style="font-size: 32px; font-weight: 800; color: #6B8E63; letter-spacing: -1px;">Y</span><span style="font-size: 32px; font-weight: 800; color: #111; letter-spacing: -1px;">а</span>
     </td>
   </tr>
 </table>`;
@@ -31,12 +28,12 @@ function getLaunchEmailHtml() {
       <td align="center">
         <table width="480" cellpadding="0" cellspacing="0" style="background: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.08);">
           <tr>
-            <td style="background: #111; padding: 48px 40px 40px; text-align: center;">
+            <td style="padding: 48px 40px 24px; text-align: center;">
               ${logoHtml}
-              <h1 style="color: #ffffff; font-size: 32px; font-weight: 700; margin: 0 0 8px; letter-spacing: -0.5px;">
+              <h1 style="color: #111; font-size: 32px; font-weight: 700; margin: 0 0 8px; letter-spacing: -0.5px;">
                 &#x1F680; Мы запустились!
               </h1>
-              <p style="color: rgba(255,255,255,0.5); font-size: 15px; margin: 0;">
+              <p style="color: #888; font-size: 15px; margin: 0;">
                 ОтменYа уже в App Store и Google Play
               </p>
             </td>

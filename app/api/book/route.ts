@@ -102,13 +102,10 @@ const t: Record<Lang, {
 };
 
 const logoHtml = `
-<table cellpadding="0" cellspacing="0" border="0" style="margin: 0 auto 32px;">
+<table cellpadding="0" cellspacing="0" border="0" style="margin: 0 auto 24px;">
   <tr>
-    <td style="width: 72px; height: 72px; border-radius: 18px; overflow: hidden; mso-hide: all;">
-      <table cellpadding="0" cellspacing="0" border="0" width="72">
-        <tr><td style="background: #111; height: 36px; font-size: 0; line-height: 0;">&nbsp;</td></tr>
-        <tr><td style="background: #6B8E63; height: 36px; font-size: 0; line-height: 0;">&nbsp;</td></tr>
-      </table>
+    <td style="font-family: -apple-system, sans-serif; text-align: center;">
+      <span style="font-size: 28px; font-weight: 800; color: #111; letter-spacing: -1px;">Отмен</span><span style="font-size: 28px; font-weight: 800; color: #6B8E63; letter-spacing: -1px;">Y</span><span style="font-size: 28px; font-weight: 800; color: #111; letter-spacing: -1px;">а</span>
     </td>
   </tr>
 </table>`;
@@ -145,10 +142,10 @@ export async function POST(request: Request) {
       <td align="center">
         <table width="480" cellpadding="0" cellspacing="0" style="background: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.06);">
           <tr>
-            <td style="background: #111; padding: 40px 40px 32px; text-align: center;">
+            <td style="padding: 40px 40px 0; text-align: center;">
               ${logoHtml}
-              <h1 style="color: #ffffff; font-size: 28px; font-weight: 700; margin: 0 0 8px; letter-spacing: -0.5px;">${i.title}</h1>
-              <p style="color: rgba(255,255,255,0.6); font-size: 15px; margin: 0;">${i.subtitle}</p>
+              <h1 style="color: #111; font-size: 28px; font-weight: 700; margin: 0 0 8px; letter-spacing: -0.5px;">${i.title}</h1>
+              <p style="color: #888; font-size: 15px; margin: 0;">${i.subtitle}</p>
             </td>
           </tr>
           <tr>
